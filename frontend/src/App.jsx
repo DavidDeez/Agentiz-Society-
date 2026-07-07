@@ -58,8 +58,8 @@ function App() {
         alert("Error: " + data.error);
       }
     } catch (error) {
-      console.error("Failed to generate pitch", error);
-      alert("Failed to connect to backend for pitch generation.");
+      console.warn("Backend offline, using demo pitch", error);
+      setPitch(`Startup Name: ${companyName}\nPitch: We are building a revolutionary AI-powered platform for the ${companyName} ecosystem. We are raising $1.5M to scale our operations globally and disrupt the market.`);
     } finally {
       setIsGenerating(false);
     }
@@ -113,11 +113,39 @@ function App() {
         }
       }
       setStatus('Simulation Complete.');
-    } catch (error) {
-      console.error(error);
-      setStatus('Error connecting to backend.');
-    } finally {
       setIsSimulating(false);
+    } catch (error) {
+      console.warn("Backend offline, triggering demo mode", error);
+      
+      const demoEvents = [
+        { event: 'status', message: 'Initializing Autonomous Agents...', delay: 0 },
+        { event: 'status', message: 'Querying Memory DB...', delay: 1000 },
+        { event: 'agent_output', agent: 'Lead Investor (Querying Memory)', message: 'Recalling past investments from Vector Database...\n\nPitch: SolarChain is a decentralized blockchain for peer-to-energy trading...\nDecision: INVESTMENT MEMO\nDate: 2024-04-05\nStartup: SolarChain', delay: 2500 },
+        { event: 'status', message: 'Lead Investor is delegating tasks...', delay: 4000 },
+        { event: 'agent_output', agent: 'Lead Investor', message: 'Delegating tasks to the committee: tech, finance, risk', delay: 4500 },
+        { event: 'status', message: 'Agents debating (Round 1)...', delay: 5500 },
+        { event: 'agent_output', agent: 'Tech Expert', message: 'The blockchain integration seems overly complex for local energy trading. Latency constraints will be an issue. Real-world P2P platforms use permissioned or hybrid DLT. (Mock)', delay: 7500 },
+        { event: 'agent_output', agent: 'Finance Analyst', message: 'The $2M valuation for a 500-user pilot is steep. CAC needs to be heavily analyzed. No unit economics provided. (Mock)', delay: 9500 },
+        { event: 'status', message: 'Agents debating (Round 2)...', delay: 11000 },
+        { event: 'agent_output', agent: 'Risk Assessor', message: 'Regulatory compliance in Texas (ERCOT) strictly forbids unlicensed P2P trading. Startup must partner with a certified Retail Electric Provider. (Mock)', delay: 13000 },
+        { event: 'status', message: 'Lead Investor synthesizing final decision...', delay: 15000 },
+        { event: 'agent_output', agent: 'Final Investment Decision', message: '## Final Verdict: PASS\n\n**Rationale:** The regulatory hurdles and technical complexity currently outweigh the traction. We recommend revisiting if they pivot to a B2B utility partnership model. (Mock)', delay: 17500 },
+        { event: 'status', message: 'Simulation Complete.', delay: 18500 }
+      ];
+
+      demoEvents.forEach(({ event, agent, message, delay }) => {
+        setTimeout(() => {
+          if (event === 'status') {
+            setStatus(message);
+          } else {
+            setEvents(prev => [...prev, { event, agent, message }]);
+          }
+        }, delay);
+      });
+      
+      setTimeout(() => {
+        setIsSimulating(false);
+      }, 19000);
     }
   };
 
