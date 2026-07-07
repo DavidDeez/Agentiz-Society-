@@ -126,20 +126,20 @@ function App() {
         <p>Autonomous AI Due Diligence Powered by Qwen Cloud</p>
         
         {!showInputPanel && status && (
-          <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'center' }}>
             <div style={{
-               fontSize: '0.85em', 
+               fontSize: '0.75em', 
                color: 'var(--accent)',
                background: 'rgba(0, 255, 204, 0.05)',
-               padding: '6px 20px',
+               padding: '4px 12px',
                borderRadius: '20px',
                border: '1px solid rgba(0, 255, 204, 0.2)',
                display: 'flex',
                alignItems: 'center',
-               gap: '10px',
+               gap: '8px',
                boxShadow: 'var(--accent-glow)'
             }}>
-              {isSimulating && <div className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px' }}></div>}
+              {isSimulating && <div className="spinner" style={{ width: '12px', height: '12px', borderWidth: '2px' }}></div>}
               {status}
             </div>
           </div>

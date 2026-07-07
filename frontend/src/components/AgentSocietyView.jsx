@@ -14,11 +14,7 @@ const parseMarkdown = (text) => {
 
 const AgentSocietyView = ({ events }) => {
   if (!events || events.length === 0) {
-    return (
-      <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', padding: '60px 0', fontSize: '1.2em' }}>
-        No activity yet. Enter a pitch and start the simulation.
-      </div>
-    );
+    return null;
   }
 
   return (

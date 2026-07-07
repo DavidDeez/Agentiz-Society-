@@ -6,13 +6,7 @@ const AgentNetworkMap = ({ status, events }) => {
 
   const lastEvent = events && events.length > 0 ? events[events.length - 1] : null;
 
-  if (!status) {
-    activeNodes = [];
-  } else if (status.includes('Initializing') || status.includes('Memory DB') || status.includes('delegating tasks')) {
-    activeNodes = ['Lead'];
-  } else if (status.includes('final decision')) {
-    activeNodes = ['Lead'];
-  } else if (status.includes('Complete')) {
+  if (status && status.includes('Complete')) {
     activeNodes = ['OSS', 'Lead'];
   } else if (lastEvent) {
     if (lastEvent.event === 'conflict_detected') {
@@ -24,7 +18,11 @@ const AgentNetworkMap = ({ status, events }) => {
       else if (lastEvent.agent.includes('Finance')) activeNodes = ['Finance'];
       else if (lastEvent.agent.includes('Risk')) activeNodes = ['Risk'];
       else if (lastEvent.agent.includes('Lead')) activeNodes = ['Lead'];
+    } else {
+      activeNodes = ['Lead'];
     }
+  } else if (status) {
+    activeNodes = ['Lead'];
   }
 
   const Node = ({ name, icon, id, color }) => {
