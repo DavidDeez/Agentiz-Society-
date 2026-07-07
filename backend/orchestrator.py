@@ -88,7 +88,9 @@ async def run_due_diligence(pitch: str, api_key: str = None, ali_access_key: str
     
     final_decision = await lead_investor.generate_response(synthesis_context + debate_history, "Write a final Investment Memo summarizing findings, the debate, and an 'INVEST' or 'PASS' verdict.", override_api_key=api_key)
     
-    memory_db.add_memo(startup_name, pitch, final_decision)
-    oss_result = upload_memo_to_oss(final_decision, session_id, ali_access_key, ali_secret_key, ali_bucket, ali_endpoint)
+    oss_result = "Skipped"
+    if "API Error" not in final_decision and "invalid_api_key" not in final_decision:
+        memory_db.add_memo(startup_name, pitch, final_decision)
+        oss_result = upload_memo_to_oss(final_decision, session_id, ali_access_key, ali_secret_key, ali_bucket, ali_endpoint)
     
     yield json.dumps({"event": "final_decision", "content": final_decision, "oss_upload": oss_result}) + "\n\n"
