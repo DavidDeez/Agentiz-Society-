@@ -9,7 +9,7 @@ def upload_memo_to_oss(memo_content: str, memo_id: str, access_key_id: str = Non
     access_key_id = access_key_id or os.getenv('ALIBABA_CLOUD_ACCESS_KEY_ID')
     access_key_secret = access_key_secret or os.getenv('ALIBABA_CLOUD_ACCESS_KEY_SECRET')
     endpoint = endpoint or os.getenv('ALIBABA_OSS_ENDPOINT', 'oss-eu-west-1.aliyuncs.com')
-    bucket_name = bucket_name or os.getenv('ALIBABA_OSS_BUCKET', 'agentiz-hackathon-b')
+    bucket_name = bucket_name or os.getenv('ALIBABA_OSS_BUCKET', 'agentiz-hackathon-bucket')
 
     if not access_key_id or not access_key_secret:
         return "Alibaba Cloud OSS credentials not found. Skipping cloud upload."
