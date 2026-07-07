@@ -42,7 +42,8 @@ function App() {
     if (!companyName.trim()) return;
     setIsGenerating(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/generate_pitch', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const response = await fetch(`${apiUrl}/generate_pitch`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -74,7 +75,8 @@ function App() {
     setStatus('Initializing Autonomous Agents...');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/analyze', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const response = await fetch(`${apiUrl}/analyze`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
